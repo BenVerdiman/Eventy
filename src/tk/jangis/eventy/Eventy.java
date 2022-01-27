@@ -14,8 +14,7 @@ public class Eventy extends JavaPlugin {
     @Override
     public void onEnable() {
         main = this;
-
-        getConfig().options().copyDefaults();
+        getConfig().options().copyDefaults(true);
         saveDefaultConfig();
         this.getCommand("rrchest").setExecutor(new CommandRChest());
     }

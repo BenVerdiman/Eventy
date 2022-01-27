@@ -1,5 +1,6 @@
 package tk.jangis.eventy;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -40,7 +41,8 @@ public class CommandRChest implements CommandExecutor {
                 while (i<=main.getConfig().getInt("rChestNumber")){
                     try {
                         String blockNumber = String.valueOf(i);
-                        ItemStack item2 = new ItemStack(Material.getMaterial(main.config.getString("b"+blockNumber)));
+                        int quantity = main.getConfig().getInt("quantityB"+blockNumber);
+                        ItemStack item2 = new ItemStack(Material.getMaterial(main.config.getString("b"+blockNumber)),quantity);
                         chestinv.addItem(item2);
                         i++;
                     }catch (IllegalArgumentException e){
@@ -52,30 +54,40 @@ public class CommandRChest implements CommandExecutor {
                 player.sendMessage("Chest spawned at x: " + x + " y: " + y + " z: " + z);
             }else if(args[0].equals("add")){
                // player.sendMessage(String.valueOf(args.length-1));
-                String blockNumber;
+               String blockNumber;
+
                 while (i<=args.length) {
                     try {
-                        blockNumber = String.valueOf(i);
-                        main.getConfig().addDefault("b" + blockNumber, args[i]);
-                        main.getConfig().options().copyDefaults(true);
-                        main.saveConfig();
-                        player.sendMessage(args[i]);
-                        player.sendMessage("and");
-                        player.sendMessage(String.valueOf(args.length - 1));
-                        i++;
-                        numberOfBlocks = Integer.parseInt(blockNumber);
-                        main.getConfig().addDefault("rChestNumber",numberOfBlocks);
-                        main.getConfig().options().copyDefaults(true);
-                        main.saveConfig();
-                    }catch (ArrayIndexOutOfBoundsException e){
-                        return true;
-                    }
+                            blockNumber = String.valueOf(i);
+                            main.getConfig().addDefault("b" + blockNumber, args[i]);
+                            i++;
+                            numberOfBlocks = Integer.parseInt(blockNumber);
+                            main.getConfig().addDefault("rChestNumber", numberOfBlocks);
+                            main.getConfig().options().copyDefaults(true);
+                            main.saveConfig();
+                        } catch (ArrayIndexOutOfBoundsException e) {
+                            return true;
+                        }
+
 
                 }
 
             }else if(args[0].equals("reload")){
                 ReloadConfig reloadConfig = new ReloadConfig();
                 reloadConfig.reloadConfig();
+            }else if(args[0].equals("setq")){
+                try {
+                    main.getConfig().addDefault("quantityB" + args[1], Integer.parseInt(args[2]));
+                    main.getConfig().options().copyDefaults(true);
+                    main.saveConfig();
+                }catch (ArrayIndexOutOfBoundsException e){
+                    if(args.length-1 < 1){
+                        player.sendMessage(ChatColor.BLUE + "Usage /rchest <blockNumber> <quantity>");
+                    }else {
+                        return true;
+                    }
+                }
+
             }
         }
 
