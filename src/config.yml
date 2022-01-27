@@ -1,0 +1,18 @@
+#Random Chest Command Config
+#Start
+#minimum x coordinates for the chest
+rChestMinX: 1
+#maximum x coordinates for the chest
+rChestMaxX: 2
+#minimum y coordinates for the chest
+rChestMinY: 1
+#maximum y coordinates for the chest
+rChestMaxY: 2
+#minimum z coordinates for the chest
+rChestMinZ: 1
+#maximum z coordinates for the chest
+rChestMaxZ: 2
+#Blocks inside the chest
+
+#How many items you want in the chest
+
